@@ -1,0 +1,46 @@
+<div class="loadingOverlay" *ngIf="!photoData.loaded"><i class="fa fa-cog fa-spin" style="font-size: 48px; color: #FFFFFF;"></i>Loading...</div>
+ 
+<div class="main" *ngIf="photoData.loaded">
+
+  <div class="view" *ngIf="photoData.photos.length > 0">
+
+    <jump-to></jump-to>
+  
+    <div class="content">
+
+      
+      <input type="button" [disabled]="isValid('previous')" class="slide-button" [ngClass]="{'slide-button--disabled' : isValid('previous')}" (click)="previous()" value="&#8249;">
+      <div class="content__photo">
+
+          <div class="content__photo__id">Photo {{ photoData.currentIndex + 1 }} of {{ photoData.photos.length }}</div>
+          
+          <div class="content__photo__image">
+            
+            <img src="assets/photos/{{ photoData.selectedPhoto.path }}" alt="{{ photoData.selectedPhoto.title }}" />
+            
+          </div>
+          
+          <div class="content__photo__name">{{ photoData.selectedPhoto.title }}</div>
+          <div class="content__photo__caption">{{ photoData.selectedPhoto.caption }}</div>
+
+      </div>
+      <input type="button" [disabled]="isValid('next')" class="slide-button" [ngClass]="{'slide-button--disabled' : isValid('next')}" (click)="next()" value="&#8250;">
+
+    </div>
+    <input type="button" class="button button--add" (click)="modalData.showModal()" value="Add Comment" >     
+
+    <add-comment *ngIf="modalData.showAddComment"></add-comment>
+    <view-comments *ngIf="photoData.photos.length > 0"></view-comments>
+  </div>
+  
+
+  <div class="imgNotFound" *ngIf="photoData.photos.length == 0">
+      <i class="fa fa-bug fa-spin"style="font-size: 80px;"></i>
+      <div>No Images Were Found</div>
+      <div>Try Back Later</div>
+  </div>
+   
+
+</div>
+
+

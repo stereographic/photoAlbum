@@ -1,0 +1,9 @@
+<div class="comments-container" *ngIf="photoData.loaded">
+
+    <div class="comments-container__comment" *ngFor="let comment of photoData.selectedPhoto.comments">
+        <span class="comments-container__comment__author"> {{ comment.author }} - </span>
+        <span class="comments-container__comment__message">" {{ comment.commentContent }} "</span>
+        <span class="comments-container__comment__date">{{ comment.commentDate }} </span>
+    </div>
+
+</div>

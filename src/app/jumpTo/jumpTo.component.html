@@ -1,0 +1,12 @@
+
+<div class="group">
+    <input type="button" class="button button--jump" (click)="jumpToggle()" value="Jump To Image" >  
+</div>
+
+<div class="jump" [ngClass]="{'jump--transition' : showPanel, 'jump--hidden' : !showPanel}">
+
+    <a *ngFor="let photo of photoData.photos" [ngClass]="{'jump__thumbnail' : showPanel, 'jump__thumbnail--hidden' : !showPanel}">
+        <img src="assets/photos/{{ photo.path }}" alt="{{ photo.title }}" (click)="jumpTo(photo)" />
+    </a>
+
+</div>

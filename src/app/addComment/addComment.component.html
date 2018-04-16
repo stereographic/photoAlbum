@@ -1,0 +1,29 @@
+<div class="addComment">
+        <div class="addComment__content">
+
+            <div class="addComment__header">
+                <div class="addComment__header-text">Add Comment</div>
+                <a (click)="modalData.hideModal()">&times;</a>
+            </div>
+
+            <div class="addComment__form">
+                <div class="input-group">
+                    <span>Name</span>
+                    <input type="text" [(ngModel)]="author" [ngClass]="{'addComment__form--default' : !authorError, 'addComment__form--error' : authorError}" maxlength="50">
+                </div>
+
+                <div class="input-group">
+                    <span>Comment</span>
+                    <textarea [(ngModel)]="comment" [ngClass]="{'addComment__form--default' : !commentError, 'addComment__form--error' : commentError}" maxlength="300"></textarea>
+                </div>
+
+                
+
+                <div class="input-group">
+                    <span class="error" *ngIf="commentError || authorError">Please fill in all fields to submit your comment</span>
+                    <input type="button" class="button button--submit" (click)="submitComment()" value="Submit">
+                </div>
+            </div>
+        </div>
+      
+</div>

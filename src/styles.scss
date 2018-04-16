@@ -1,0 +1,481 @@
+/* You can add global styles to this file, and also import other style files */
+$device: "screen and (max-width:940px)";
+
+@mixin display-flex() {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+@mixin flex($args) {
+    -webkit-box-flex: $args;
+    -webkit-flex: $args;
+    -ms-flex: $args;
+    flex: $args; 
+}
+
+@mixin thumbnail-transition() {
+    // greyscaling
+    filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: gray;
+    -webkit-filter: grayscale(100%); 
+
+    transform:scale(1);
+    -ms-transform:scale(1); /* IE 9 */
+    -moz-transform:scale(1); /* Firefox */
+    -webkit-transform:scale(1); /* Safari and Chrome */
+    -o-transform:scale(1); /* Opera */
+
+    // smooth transition
+    transition: 0.4s ease-in;
+    -webkit-transition: 0.4s ease-in;
+}
+
+@mixin center() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@-webkit-keyframes slideDown {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+}
+
+@keyframes slideDown {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+html,body {
+    width:100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+.main {
+    width:100%;
+    height: 100%;
+    box-shadow: inset 0 0 490px #333333;
+    background-color: #576574;
+    overflow: auto;
+}
+.view {
+    @include display-flex();
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {   
+    @include display-flex();
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    max-width: 900px;
+    min-width: 900px;
+    max-height: 80%;
+    background-color: #8395a760;
+    box-shadow: 0 10px 18px rgba(0,0,0,0.20), 0 10px 12px rgba(0,0,0,0.22);
+    border-radius: 15px;
+    margin: 15px;
+
+    @media #{$device} {
+        flex-flow: row nowrap;
+        max-width: 80%;
+        min-width: 80%;
+        height: 80%;
+    }
+
+    &__photo {
+        margin: 0 auto;
+        &__id {
+            font-family: 'Alegreya Sans', sans-serif;
+            text-align: center;
+            padding: 0px 0px 10px 0px;
+        }
+
+        &__image {
+            @include display-flex();
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-content: center;
+            max-height: 80%;
+
+            @media #{$device} {
+                max-height: 80%;
+            }
+
+            img {
+                margin: auto;
+                max-width: 100%;
+                max-height: 500px;
+
+                @media #{$device} {
+                    max-height: 400px;
+                }
+            }
+        }
+
+        &__name {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        &__caption {
+            font-family: 'Alegreya Sans', sans-serif;
+            text-align: center;
+        }
+    }
+}
+
+.comments-container {
+    @include display-flex();
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 40em;
+    // max-width: 900px;
+
+    @media #{"screen and (max-width:680px)"} {
+        box-sizing: content-box;
+        width: 80%;
+    }
+
+    &__comment {
+        @include display-flex();
+        flex-flow: column wrap;
+        width: 100%;
+        border: 2px solid #dedede;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        padding: 5px;
+        margin: 10px 0px 0px 0px;
+        font-family: 'Alegreya Sans', sans-serif;
+
+        @media #{$device} {
+            box-sizing: content-box;
+            width: 100%;
+            margin: 10px 10px 0px 10px;
+        }
+
+        &__author {
+            font-weight: bold;
+        }
+
+        &__message {
+            margin-right: auto;
+            margin-left: auto;
+            font-style: italic;
+        }
+
+        &__date {
+            margin-left: auto;
+            font-size: 14px;
+            color: #333333;
+        }
+    }
+}
+
+.jump { 
+    @include display-flex();
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    margin: 0 auto 10px;
+
+    &--hidden {
+        opacity: 0;
+        height: 20px;
+        width: 80px;
+        z-index: -10;
+    }
+
+    &--transition {
+        opacity: 1;
+        transition: 0.2s ease-in-out all;
+        -webkit-transition: 0.2s ease-in-out all;
+    }
+
+    &__thumbnail {
+        @include flex(0 0 auto);
+        margin: 5px;
+        position: relative;
+        width: 80px;
+        height: 80px;
+        overflow: hidden;     
+        
+        &--hidden{
+            width: 80px; 
+            height: 20px; 
+            overflow: hidden; 
+            z-index: -1;
+            pointer-events: none;
+
+            a {
+                pointer-events: none;
+            }
+        
+            img {
+                width: 80px; 
+                height: 80px; 
+                z-index: -1;
+            }
+        }
+
+        img {   
+            bottom: 0;
+            height: 100%;
+            left: 0;
+            object-fit: cover;
+            object-position: center;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 100%;
+
+            transform:scale(1.5);
+            -ms-transform:scale(1.5); /* IE 9 */
+            -moz-transform:scale(1.5); /* Firefox */
+            -webkit-transform:scale(1.5); /* Safari and Chrome */
+            -o-transform:scale(1.5); /* Opera */
+        }
+
+        img:hover {
+            bottom: 0;
+            height: 100%;
+            left: 0;
+            object-fit: cover;
+            object-position: center;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 100%;
+
+            @include thumbnail-transition();
+
+        }
+
+    }
+
+}
+
+
+.addComment {
+
+    display: block; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    outline: none;
+    background-color: rgba(170, 170, 170, 0.8); 
+    padding-top: 10%; 
+    
+
+    &__content {
+        @include display-flex();
+        flex-flow: column nowrap;
+        
+        position: relative;
+        margin: auto;
+        
+        width: 600px;
+
+        border-radius: 20px 20px 20px 20px;
+        box-shadow: 0 20px 28px rgba(0,0,0,0.60), 0 10px 22px rgba(0,0,0,0.62);
+
+        -webkit-animation-name: slideDown;
+        animation-name: slideDown;
+        -webkit-animation-duration: 0.6s;
+        animation-duration: 0.6s;       
+
+        @media #{$device} {
+            width: 80%;
+        }
+    }
+
+    &__header-text {
+        display: inline-block;
+        align-self: flex-end;
+        padding: 0px 15px 5px 10px;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 400;
+        font-size: 18px;
+
+        @media #{$device} {
+            font-size: 0.8em;
+        }
+    }
+
+    &__header {
+        @include display-flex();
+        flex-flow: row nowrap;
+        width: 100%;
+        height: 32px;
+        border-radius: 20px 20px 20px 0px;
+        background-color: #82589F;
+        color: white;
+
+        a {
+            @include display-flex();
+            justify-content: center;
+            align-items: center;
+            text-align:center;
+            height: 32px;
+            width: 32px;
+
+            position: absolute;
+            right: 0px;
+            top:0;
+            z-index: 1;
+
+            font-size: 26px;
+            font-weight: bold;
+            text-decoration:none;
+
+            cursor: pointer;
+ 
+            background-color: #4f3761;
+            color:white;
+            border-radius: 0px 15px 0px 0px;
+        }
+
+    }
+
+    &__form {
+        @include display-flex();
+        flex-flow: column nowrap;
+        width: 100%;
+        padding: 10px 10px 10px 10px;
+        box-sizing: border-box;
+        background-color: #ffffff;
+        font-family: 'Alegreya Sans', sans-serif;
+        font-size: 14px;
+
+        input {
+            height: 30px;
+            padding: 0 0 0 7px;
+        }
+        textarea {
+            height: 100px;
+            padding: 0 0 0 5px;
+            resize: vertical;
+        }
+
+        &--default {
+            background-color: #e2e2e2;
+            border: 0.5px solid #cccccc;
+            outline: none;
+            border-radius: 2px;
+
+            transition: 0.3s ease-in all;
+            -webkit-transition: 0.3s ease-in all;
+        }
+
+        &--error {
+            background-color: #fce4e4;
+            border: 0.5px solid #cc0033;
+            outline: none;
+            border-radius: 2px;
+
+            transition: 0.3s ease-in all;
+            -webkit-transition: 0.3s ease-in all;
+        }
+        
+    }   
+}
+.group {
+    @include display-flex();
+    flex-flow: row wrap;
+    justify-content: center;
+    align-content: center;
+    margin-top: 10px;
+}
+.button {
+    border: none;
+    color: white;
+    //padding: 10px 10px 20px 10px;
+    text-align: center;
+    text-decoration: none;
+    //display: inline-block;
+    font-family: 'Alegreya Sans', sans-serif;
+    font-size: 14px;
+    background-color: #4f3761;
+    width: 100%;
+    &--submit {
+        font-size: 18px;
+    }
+    &--add {
+        width: 120px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    &--jump {
+        width: 120px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
+.error {
+    background-color: #fce4e4;
+    border: 0.5px solid #cc0033;
+    outline: none;
+    border-radius: 2px;
+
+    margin: 10px 0px 10px 0px;
+    padding: 5px 0px 5px 0px;
+
+    transition: 0.3s ease-in all;
+    -webkit-transition: 0.3s ease-in all;
+    text-align: center;
+}
+.input-group {
+    @include display-flex();
+    flex-flow: column nowrap;
+    width: 100%;
+    padding: 0px 0px 10px 0px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    font-family: 'Alegreya Sans', sans-serif;
+    font-size: 14px;
+}
+.imgNotFound {    
+    @include center();
+    text-align: center;
+    font-family: 'Alegreya Sans', sans-serif;
+    font-size: 3vw;
+}
+
+.slide-button {
+
+    font-size: 60px;
+    text-align: center;
+    border: none;
+    background: none;
+
+    &--enabled {
+        cursor: pointer;
+        color: black;
+    }
+    &--disabled {
+        cursor: none;
+        color: #bebebe;
+    }
+}
+input:focus {
+    outline:none;
+}
+::-webkit-scrollbar {
+    width: 0px;  
+    background: transparent;
+}
